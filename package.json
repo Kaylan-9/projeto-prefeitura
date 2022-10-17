@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "server": "node ./server/server.js",
+    "client": "cd client && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "@emotion/css": "^11.10.0",
+    "concurrently": "^7.4.0"
+  }
+}
