@@ -4,7 +4,7 @@ const app = require('./app.js');
 
 // app.use('/prints', express.static(path.join(__dirname, '/public')));
 
-app.set('port', 8080 || process.env.PORT);
+app.set('port', process.env.PORT || 8080);
 app.listen(app.get('port'), 
   () => console.log("~server~on~line~(in~port~8080)~")
 );
