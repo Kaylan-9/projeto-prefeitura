@@ -6,7 +6,8 @@ const crypto = require('../models/Crypto');
 
 module.exports = new (class{
   init(req, res) {
-    res.sendFile(path.join(__dirname, '../../..', 'client', 'build', 'index.html'));
+    // res.sendFile(path.join(__dirname, '../../..', 'client', 'build', 'index.html'));
+    res.end("working ~");
   }
 
   async getimage(req, res) {
