@@ -1,23 +1,6 @@
 import styled, {createGlobalStyle} from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
-  html {scroll-behavior: smooth}
-  :target {scroll-margin-top: .8em}
-  ul {list-style-type: none}
-
-  * {
-    border: none;
-    border-radius: 0px;
-    box-shadow: none;
-    padding: 0px;
-    margin: 0px;
-    text-decoration: none;
-  }
-
-  button {
-    background: transparent;
-    display: flex;
-  }
 `;
 
 export const size = {
