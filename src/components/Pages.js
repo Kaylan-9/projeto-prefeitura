@@ -16,7 +16,7 @@ const Page  = ({name, link, stateItemPage, bg, onclick, viewerImg}) => {
   const [imgUrl, setImgUrl] = useState('');
 
   useEffect(async () => {
-    const url_req = 'http://localhost:8080/screenshot';
+    const url_req = 'https://tiesp.herokuapp.com/screenshot';
     let req_config = new Object();
     req_config.method = 'POST';
     req_config.body = JSON.stringify({link, name});
@@ -66,7 +66,7 @@ const Pages = () => {
   const [data, setDataState] = useState([]);
   let listPagesContainers = [];
   useEffect(async () => {
-    const url = "http://localhost:8080/pages";
+    const url = "https://tiesp.herokuapp.com/pages";
     let req_config = new Object();
     req_config.method = 'POST';
     req_config.headers = {'Content-Type': 'application/json', 'Accept': 'application/json'};

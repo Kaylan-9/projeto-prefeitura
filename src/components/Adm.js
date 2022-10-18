@@ -20,7 +20,7 @@ const EditPanel = () => {
     let req_config = {};
     req_config.method = 'POST';
     req_config.headers = {'Content-Type': 'application/json', 'Accept': 'application/json'};
-    const res = await fetch('http://localhost:8080/pages', req_config);
+    const res = await fetch('https://tiesp.herokuapp.com/pages', req_config);
     const data = await res.json();
     setPages(data);
   }, [msg]);
@@ -90,7 +90,7 @@ const EditPanel = () => {
             : {items_selecionados})
           );
 
-          const res = await fetch(`http://localhost:8080/${typeselectedit}/${typeselect}/`, req_config);
+          const res = await fetch(`https://tiesp.herokuapp.com/${typeselectedit}/${typeselect}/`, req_config);
           const finaly_ = await res.json();
           console.log(finaly_);
           setMsg(finaly_);
