@@ -3,6 +3,7 @@ import {AdmStyle, EditPanelStyle, Selectors, SelectorsTool, CadPageStyle} from '
 import {BsFillGearFill} from 'react-icons/bs';
 import {MdOutlineManageAccounts} from 'react-icons/md';
 import {useState, useEffect} from 'react';
+const url = `http://localhost:8080`;
 
 const EditPanel = () => {
   const [pages, setPages] = useState([]);
@@ -20,7 +21,7 @@ const EditPanel = () => {
     let req_config = {};
     req_config.method = 'POST';
     req_config.headers = {'Content-Type': 'application/json', 'Accept': 'application/json'};
-    const res = await fetch('https://tiesp.herokuapp.com/pages', req_config);
+    const res = await fetch(`${url}/pages`, req_config);
     const data = await res.json();
     setPages(data);
   }, [msg]);
@@ -84,13 +85,17 @@ const EditPanel = () => {
             headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
           };
 
+          console.log(((typeselectedit=="create" || typeselectedit=="update") ?
+              (typeselect=="pages" ? {...inputs_cadpage_new} : {...inputs_cadconju_new}) 
+            : {items_selecionados}));
+
           req_config.body= JSON.stringify(
-            (typeselectedit==("create" || "update") ?
+            ((typeselectedit=="create" || typeselectedit=="update") ?
               (typeselect=="pages" ? {...inputs_cadpage_new} : {...inputs_cadconju_new}) 
             : {items_selecionados})
           );
 
-          const res = await fetch(`https://tiesp.herokuapp.com/${typeselectedit}/${typeselect}/`, req_config);
+          const res = await fetch(`${url}/${typeselectedit}/${typeselect}/`, req_config);
           const finaly_ = await res.json();
           console.log(finaly_);
           setMsg(finaly_);
@@ -110,16 +115,31 @@ const EditPanel = () => {
       </H3>
       {typeselect=="pages" ?
         [
-          <Input type="text" placeholder="nome da página" defaultValue={inputs_cad.nome} onChange={(e)=>{inputs_cadpage_new.nome = e.target.value;}}/>,
-          <Input type="text" placeholder="link da página" defaultValue={inputs_cad.link} onChange={(e)=>{inputs_cadpage_new.link = e.target.value;}}/>
+          <Input type="text" placeholder="nome da página" defaultValue={inputs_cad.nome} onChange={(e)=>{
+            inputs_cadpage_new.nome = e.target.value;
+            inputs_cadpage_new._id = inputs_cad._id;
+          }}/>,
+          <Input type="text" placeholder="link da página" defaultValue={inputs_cad.link} onChange={(e)=>{
+            inputs_cadpage_new.link = e.target.value;
+            inputs_cadpage_new._id = inputs_cad._id;
+          }}/>
         ]
       :
         [
           <div>
-            <Input type="text" placeholder="escrito do conjunto" defaultValue={inputs_cad.nome} onChange={(e)=>{inputs_cadconju_new.nome = e.target.value;}}/>
-            <div><input type="color" defaultValue={inputs_cad.color} onChange={(e)=>{inputs_cadconju_new.color = e.target.value;}}/></div>
+            <Input type="text" placeholder="escrito do conjunto" defaultValue={inputs_cad.nome} onChange={(e)=>{
+              inputs_cadconju_new.name = e.target.value;
+              inputs_cadconju_new._id = inputs_cad._id;
+            }}/>
+            <div><input type="color" defaultValue={inputs_cad.color} onChange={(e)=>{
+              inputs_cadconju_new.color = e.target.value;
+              inputs_cadconju_new._id = inputs_cad._id;
+            }}/></div>
           </div>,
-          <TextArea placeholder="descrição do conjunto" defaultValue={inputs_cad.descricao} onChange={(e)=>{inputs_cadconju_new.descricao = e.target.value;}}/>
+          <TextArea placeholder="descrição do conjunto" defaultValue={inputs_cad.descricao} onChange={(e)=>{
+            inputs_cadconju_new.descricao = e.target.value;
+            inputs_cadconju_new._id = inputs_cad._id;
+          }}/>
         ]
       }
       <Btn onClick={()=>{
