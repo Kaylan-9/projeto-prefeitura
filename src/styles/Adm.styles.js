@@ -1,19 +1,22 @@
 import {styled, color, font} from './styles';
 
 export const EditPanelStyle = styled.div`
-  > h2 {
+  width: 180px;
+  > h3 {
     align-items: center;
+    background: ${color.tres};
+    border-radius: 8px;
     color: ${color.light};
     display: inline-flex;
     gap: 10px;
-    justify-content: center;
-    margin-bottom: 20px !important;
-    width: 255px;
+    justify-content: space-around;
+    margin-bottom: 10px !important;
+    padding: 10px 0px;
+    width: 100%;
   }
   > div {
     background: ${color.tres};
-    border-radius: 15px;
-    min-width: 255px;
+    border-radius: 8px;
     overflow: hidden !important; 
     > h3 {
       color: ${color.facebook};
@@ -31,11 +34,6 @@ export const AdmStyle = styled.div`
   grid-template-columns: min-content auto;
   margin: 0px auto;
   max-width: ${props => props.maxsize ? `${props.maxsize}px` : "1250px"};
-  button.btnadd {
-    background-color: ${color.facebook};
-    margin-bottom: 10px;
-    min-width: 140px !important;
-  }
   button.confirm {
     border-radius: 0px !important;
     display: inline;
@@ -72,8 +70,7 @@ export const AdmStyle = styled.div`
 
 export const CadPageStyle = styled.div`
   align-items: center;
-  background-color: ${color.tres};
-  border-radius: 15px;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -115,8 +112,3 @@ export const Selectors = styled.div`
     min-width: 100%;
   }
 `;
-
-export const SelectorsTool = styled(Selectors)`
-  > div {min-width: 140px !important}
-`;
-

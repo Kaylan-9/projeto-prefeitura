@@ -95,6 +95,7 @@ export const Input = styled.input`
   margin: 0px auto;
   max-width: 200px;
 `;
+
 export const TextArea = styled.textarea`
   ${btn}
   background-color: ${color.um};
@@ -105,6 +106,7 @@ export const TextArea = styled.textarea`
   margin: 0px auto;
   min-width: 350px;
 `;
+
 export const Submit = styled(Input)`
   background-color: transparent;
   border: solid 2px ${color.seis};
