@@ -1,11 +1,17 @@
-import {styled, color, H2, H3, Btn, BoxRadio, Input, Submit, BoxMarking, TextArea} from '../styles/styles';
-import {AdmStyle, EditPanelStyle, Selectors, CadPageStyle} from '../styles/Adm.styles';
+import {useState, useLayoutEffect, useRef, useContext, useEffect} from 'react';
+import {PagesRequestContext} from "../contexts/PagesRequest";
+import {AuthenticationContext} from "../contexts/Authentication";
+import {H2, H3, Btn, BoxRadio, Input, Submit, BoxMarking, TextArea} from '../styles/styles';
+import {AdmStyle, EditPanelStyle, Selectors, CadPageStyle, UnauthenticatedStyle} from '../styles/Adm.styles';
 import {BsFillGearFill} from 'react-icons/bs';
 import {MdOutlineManageAccounts} from 'react-icons/md';
-import {useState, useEffect, useRef, useCallback} from 'react';
 const url = `http://localhost:8080`;
 
-const EditPanel = () => {
+const Authenticated = () => {
+  const {pages, setUpdatePages} = useContext(PagesRequestContext);
+  const {setUserMod} = useContext(AuthenticationContext);
+
+  const btnconfirm = useRef(null);
   const input = {
     page : {
       nome: useRef(null),
@@ -18,24 +24,16 @@ const EditPanel = () => {
     }
   };
 
-  const [pages, setPages] = useState([]);
   const [typeselectedit, setYpeselectedit] = useState('');
   const [typeselect, setYpeselect] = useState('');
   const [select, setSelect] = useState(false);
-  const [msg, setMsg] = useState([]);
-  const [inputs_cad, setInputs_cad] = useState({});
-  let items_selecionados = [];
   let inputs_cadpage_new = {};
   let inputs_cadconju_new = {};
+  let items_selecionados = [];
 
-  useEffect(async () => {
-    let req_config = {};
-    req_config.method = 'POST';
-    req_config.headers = {'Content-Type': 'application/json', 'Accept': 'application/json'};
-    const res = await fetch(`${url}/pages`, req_config);
-    const data = await res.json();
-    setPages(data);
-  }, [msg]);
+  useLayoutEffect(() => {
+    btnconfirm.current.display = "none";
+  }, [select]);
 
   const BoxMarkBase = ({nome, bg, typeselectflag, val, id, descricao}) => ( 
     <BoxMarking 
@@ -47,22 +45,22 @@ const EditPanel = () => {
       change = {() => {
         if(typeselectedit=="remove") {
           if(items_selecionados.includes(val)) items_selecionados.splice(items_selecionados.indexOf(val), 1);
-          else items_selecionados.push(val);  
-          if(items_selecionados.length>=1) setSelect(true);
-          else setSelect(false);
+          else items_selecionados.push(val); 
         } else if(typeselectedit=="update") {             
-          setInputs_cad((typeselect=="conjuntos" ? {nome, color: bg, descricao: descricao, _id: val} : {nome, link: val, _id: id}));
-          setSelect(true); 
+          setSelect(typeselect=="conjuntos" ? {nome, color: bg, descricao: descricao, _id: val} : {nome, link: val, _id: id}); 
         } else if(typeselectedit=="create" && typeselect=="pages") {
-          setInputs_cad({nome, color: bg, descricao: descricao, _id: val});
-          setSelect(true);
+          setSelect({nome, color: bg, descricao: descricao, _id: val});
         } 
       }}
     />
   );
 
   return (<AdmStyle>
-    <EditPanelStyle style={{gridArea: "editpanel"}}>
+    
+    <EditPanelStyle>
+      <Btn className="confirm" onClick={() => [sessionStorage.removeItem("user"), setUserMod({msg: 2})]}>
+        Sair
+      </Btn>
       <H3>
         <BsFillGearFill/>
         <span>Gerenciar</span>
@@ -70,34 +68,17 @@ const EditPanel = () => {
       <div>
         <H3>Manipular</H3>
         <Selectors>
-          <BoxRadio nome="Conjuntos" pertence="type_edit" change={()=>{
-            setYpeselect('conjuntos');
-            setSelect(false);
-            setInputs_cad({});
-          }}/>
-          <BoxRadio nome="Páginas" pertence="type_edit" change={()=>{
-            setYpeselect('pages');
-            setSelect(false);
-            setInputs_cad({});
-          }}/>
+          <BoxRadio nome="Conjuntos" pertence="type_edit" change={()=>[setYpeselect('conjuntos'), setSelect(false)]}/>
+          <BoxRadio nome="Páginas" pertence="type_edit" change={()=>[setYpeselect('pages'), setSelect(false)]}/>
         </Selectors>
       </div>
       <div>
         <Selectors>
-          <BoxRadio nome="Editar" pertence="tool_edit" change={()=>{
-            setYpeselectedit('update');
-            setSelect(false);
-            setInputs_cad({});
-          }}/>
-          <BoxRadio nome="Remover" pertence="tool_edit" change={()=>{
-            setYpeselectedit('remove');
-            setSelect(false);
-            setInputs_cad({});
-          }}/>  
+          <BoxRadio nome="Editar" pertence="tool_edit" change={()=>[setYpeselectedit('update'), setSelect(false)]}/>
+          <BoxRadio nome="Remover" pertence="tool_edit" change={()=>[setYpeselectedit('remove'), setSelect(false)]}/>  
           <BoxRadio nome="Adicionar" pertence="tool_edit" change={()=>{
             setYpeselectedit('create');
             setSelect(false);
-            setInputs_cad({});
             if(typeselect=="conjuntos") {
               input.conjunto.nome.current.value = "";
               input.conjunto.color.current.value = "";
@@ -105,47 +86,44 @@ const EditPanel = () => {
             }
           }}/>  
         </Selectors>
-
-        {typeselectedit!='' && (select || (typeselectedit=="create" && typeselect=="conjuntos")) ?
-          <Btn className="confirm" onClick={async () => {
-            let req_config = {
-              method: 'POST',
-              headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
-            };
-
-            req_config.body= JSON.stringify(
-              ((typeselectedit=="create" || typeselectedit=="update") ?
-                (typeselect=="pages" ? {...inputs_cadpage_new} : {...inputs_cadconju_new}) 
-              : {items_selecionados})
-            );
-
-            const res = await fetch(`${url}/${typeselectedit}/${typeselect}/`, req_config);
-            const finaly_ = await res.json();
-            console.log(finaly_);
-            setMsg(finaly_);
-            setSelect(false);
-            if(typeselectedit=="create" || typeselectedit=="update") {
-              if(typeselect=="conjuntos"){
-                input.conjunto.nome.current.value = "";
-                input.conjunto.color.current.value = "";
-                input.conjunto.descricao.current.value = "";
-              } else if(typeselect=="pages") {
-                input.page.nome.current.value = "";
-                input.page.link.current.value = "";
-              }
-            }
-          }}>
-            <span>Confirmar</span>
-          </Btn>
-        :
-          ""
-        }
-
       </div>
+      <Btn ref={btnconfirm} className="confirm" onClick={async () => {
+        let reqconfig = {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
+        };
 
+
+        reqconfig.body= JSON.stringify(
+          ((typeselectedit=="create" || typeselectedit=="update") ?
+          (typeselect=="pages" ? inputs_cadpage_new : inputs_cadconju_new) 
+          : items_selecionados)
+        );
+        const res = await fetch(`${url}/${typeselectedit}/${typeselect}/`, reqconfig);
+        const finaly_ = await res.json();
+
+        setUpdatePages(finaly_);
+        setSelect(false);
+        if(typeselectedit=="create" || typeselectedit=="update") {
+          if(typeselect=="conjuntos"){
+            input.conjunto.nome.current.value = "";
+            input.conjunto.color.current.value = "";
+            input.conjunto.descricao.current.value = "";
+          } else if(typeselect=="pages") {
+            input.page.nome.current.value = "";
+            input.page.link.current.value = "";
+          }
+        }
+      }}>
+        <span>Confirmar</span>
+      </Btn>
     </EditPanelStyle>
 
-    { ((typeselectedit=="create" && typeselect=='conjuntos') || (typeselectedit=="create" && typeselect=="pages" && select) || (typeselectedit=="update" && select)) ?
+    {
+      (typeselectedit=="create" && typeselect=='conjuntos') || 
+      (typeselectedit=="create" && typeselect=="pages" && select) ||
+      (typeselectedit=="update" && select) 
+    ?
     <CadPageStyle>
       <H3>
         {typeselectedit=="update" ? "Atualizar" : "Cadastrar"}{" "}
@@ -153,40 +131,37 @@ const EditPanel = () => {
       </H3>
       {typeselect=="pages" ?
         [
-          <Input ref={input.page.nome} type="text" placeholder="nome da página" defaultValue={typeselectedit=="create" ? "" : inputs_cad.nome} onChange={(e)=>{
+          <Input ref={input.page.nome} type="text" placeholder="nome da página" defaultValue={typeselectedit=="create" ? "" : select.nome} onChange={(e)=>{
             inputs_cadpage_new.nome = e.target.value;
-            if(typeselectedit=="update") inputs_cadpage_new._id = inputs_cad._id;
-            else if(typeselectedit=="create") inputs_cadpage_new.conjunto_id = inputs_cad._id;
+            if(typeselectedit=="update") inputs_cadpage_new._id = select._id;
+            else if(typeselectedit=="create") inputs_cadpage_new.conjunto_id = select._id;
           }}/>,
-          <Input ref={input.page.link} type="text" placeholder="link da página" defaultValue={typeselectedit=="create" ? "" : inputs_cad.link} onChange={(e)=>{
+          <Input ref={input.page.link} type="text" placeholder="link da página" defaultValue={typeselectedit=="create" ? "" : select.link} onChange={(e)=>{
             inputs_cadpage_new.link = e.target.value;
-            if(typeselectedit=="update") inputs_cadpage_new._id = inputs_cad._id;
-            else if(typeselectedit=="create") inputs_cadpage_new.conjunto_id = inputs_cad._id;
+            if(typeselectedit=="update") inputs_cadpage_new._id = select._id;
+            else if(typeselectedit=="create") inputs_cadpage_new.conjunto_id = select._id;
           }}/>
         ]
       :
         [
           <div>
-            <Input ref={input.conjunto.nome} type="text" placeholder="escrito do conjunto" defaultValue={inputs_cad.nome} onChange={(e)=>{
+            <Input ref={input.conjunto.nome} type="text" placeholder="escrito do conjunto" defaultValue={select.nome} onChange={(e)=>{
               inputs_cadconju_new.name = e.target.value;
-              inputs_cadconju_new._id = inputs_cad._id;
+              inputs_cadconju_new._id = select._id;
             }}/>
-            <div><input ref={input.conjunto.color} type="color" defaultValue={inputs_cad.color} onChange={(e)=>{
+            <div><input ref={input.conjunto.color} type="color" defaultValue={select.color} onChange={(e)=>{
               inputs_cadconju_new.color = e.target.value;
-              inputs_cadconju_new._id = inputs_cad._id;
+              inputs_cadconju_new._id = select._id;
             }}/></div>
           </div>,
-          <TextArea ref={input.conjunto.descricao} placeholder="descrição do conjunto" defaultValue={inputs_cad.descricao} onChange={(e)=>{
+          <TextArea rows={10} ref={input.conjunto.descricao} placeholder="descrição do conjunto" defaultValue={select.descricao} onChange={(e)=>{
             inputs_cadconju_new.descricao = e.target.value;
-            inputs_cadconju_new._id = inputs_cad._id;
+            inputs_cadconju_new._id = select._id;
           }}/>
         ]
       }
       { typeselect=="conjuntos" && typeselectedit=="create" ? "" :
-      <Btn onClick={()=>{
-        setSelect(false);
-        setInputs_cad({});
-      }}>Cancelar</Btn> }
+      <Btn onClick={()=>setSelect(false)}>Cancelar</Btn> }
     </CadPageStyle>
     :
     <ul style={{gridArea: "listconju"}}>
@@ -198,32 +173,38 @@ const EditPanel = () => {
           </li>)}
         </ul>
       </li>)}
-    </ul>}
+    </ul>
+    }
 
   </AdmStyle>);
 };
 
 
-const Form = styled(({className}) => (<form {...{className}}>
-  <H2>
-    <MdOutlineManageAccounts/>
-    <span>Acesso ao gerenciamento</span>
-  </H2>
-  <Input type="text" placeholder="user"/>
-  <Input type="password" placeholder="senha"/>
-  <Submit type="submit" value="Acessar"/>
-</form>))`
-  display: grid;
-  flex-direction: column;
-  > h2 {
-    align-items: center;
-    display: inline-flex;
-    gap: 10px;
-    margin: 0px auto;
-    > * {color: ${color.light}}
-  }
-`;
+const Unauthenticated = () => {
+  const {user, setUserMod} = useContext(AuthenticationContext);
+  const name = useRef("");
+  const password = useRef("");
 
-const Adm = EditPanel;
-export default () => <Adm/>;
+  return (<UnauthenticatedStyle>
+    <H2>
+      <MdOutlineManageAccounts/>
+      <span>Acesso ao gerenciamento</span>
+    </H2>
+    <Input type="text" placeholder="user" onChange={(e)=>{name.current = e.target.value}}/>
+    <Input type="password" placeholder="senha" onChange={(e)=>{password.current = e.target.value}}/>
+    <Submit type="submit" value="Acessar" onClick={(e)=> {
+      e.preventDefault();
+      if(name.current!="" && password.current!="") setUserMod({
+        name: name.current,
+        password: password.current
+      });
+    }}/>
+    {user.msg!=null ? <p key="usermsg">{user.msg}</p> : ""}
+  </UnauthenticatedStyle>);
+};
+
+export default () => { 
+  const {user} = useContext(AuthenticationContext);
+  return user.exists ? <Authenticated/> : <Unauthenticated/>;
+};
   

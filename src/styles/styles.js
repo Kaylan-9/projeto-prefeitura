@@ -1,3 +1,4 @@
+import React from "react";
 import styled, {createGlobalStyle} from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
@@ -64,7 +65,7 @@ export const h3 = `
 export const btn = `
   align-items: center;
   background-color: ${color.green};
-  border-radius: 30px;
+  border-radius: 8px;
   color: ${color.white};
   display: flex;
   font-family: ${font.Kantumruy};
@@ -92,7 +93,6 @@ export const Input = styled.input`
   font-size: 17px;
   font-weight: bold;
   text-align: center;
-  margin: 0px auto;
   max-width: 200px;
 `;
 
@@ -124,14 +124,14 @@ export const Submit = styled(Input)`
 const breakpoints = [620, 900, 800, 1000, 720, 1150, 950, 310];
 export const mq =  breakpoints.map(bp => `@media (max-width: ${bp}px)`);
 
-export const BoxMarking = styled(({className, style, nome, pertence, type = "radio", change, active = 1}) => {
+export const BoxMarking = styled(React.forwardRef(({className, style, nome, pertence, type = "radio", change, active = 1, ref}) => {
   const nomeLowerCase = (nome[0].toLowerCase()+nome.slice(1)).normalize("NFD");
   return (<div {...{className, style}}>
-    {!active ? '' : <input type={type} value="Conjuntos" name={pertence} id={nomeLowerCase} onChange={change}/>}
-    <label for={nomeLowerCase}>{nome}</label>
-    {!active ? '' : <span/>}
+    {!active ? '' : <input key="boxmarking" type={type} value="Conjuntos" name={pertence} id={nomeLowerCase} onChange={change} ref={ref}/>}
+    <label htmlFor={nomeLowerCase}>{nome}</label>
+    {!active ? '' : <span key="boxmarkingspan"/>}
   </div>);
-})`
+}))`
   ${btn}
   background-color: ${color.quatro};
   > label {
@@ -154,7 +154,7 @@ export const BoxMarking = styled(({className, style, nome, pertence, type = "rad
   input ~ span {background-color: white}
 `;
 
-export const BoxRadio = (props)=> <BoxMarking {...{...props, type: "radio"}}/>;
-export const BoxCheck = (props)=> <BoxMarking {...{...props, type: "checkbox"}}/>;
+export const BoxRadio = React.forwardRef((props)=> <BoxMarking {...{...props, type: "radio"}}/>);
+export const BoxCheck = React.forwardRef((props)=> <BoxMarking {...{...props, type: "checkbox"}}/>);
 
 export {styled};

@@ -33,7 +33,7 @@ export const Title  = styled('div')`
 `;
   
 export const HeaderStyle  = styled.header`
-  padding: 9px 5vw;
+  padding: 12px 5vw;
   display: grid;
   max-width: ${props => props.maxsize ? `${props.maxsize}px` : "1250px"};
   margin: 0px auto;

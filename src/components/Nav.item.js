@@ -5,7 +5,7 @@ export default styled(({ className, display, title, icon=false, children=false, 
     const [extraVisible, setExtraVisible] = useState("none");
 
     return <li {...{className}} style = {{display}}>
-        <a href = {`#${toolId}`} onClick = {()=> setExtraVisible(extraVisible == "none" ? "flex" : "none")}> 
+        <a href = {`#${toolId}`} onClick = {()=> setExtraVisible(extraVisible === "none" ? "flex" : "none")}> 
         {icon ? icon : ""} {title} 
         </a>
         {children ? <div style = {{display: extraVisible}} onClick = {init} onLoad = {init}> {children} </div> : ""}
@@ -19,7 +19,7 @@ export default styled(({ className, display, title, icon=false, children=false, 
     display: inline-flex;
     gap: 5px;
     font-family: ${font.Kantumruy};
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 100;
     position: relative;
     ${mq[0]} {
