@@ -4,7 +4,6 @@ export const EditPanelStyle = styled.div`
   width: 200px;
   display: grid;
   gap: 10px;
-  grid-area: "editpanel";
   > h3 {
     align-items: center;
     background: ${color.tres};
@@ -17,37 +16,37 @@ export const EditPanelStyle = styled.div`
     padding: 10px 0px;
     width: 100%;
   }
-  > div {
-    .botaoteste {
-      color: red;
-    } 
-    background: ${color.tres};
+  > div { 
     border-radius: 8px;
     overflow: hidden !important; 
     > h3 {
       color: ${color.light};
       margin: 10px 0px;
-      text-align: center;
     }
   }
-  > button.confirm {
-    border-radius: 8px;
-    padding: 12.5px 10px;
-    width: 100%;
-    > span {text-align: center}
-    &:hover {
-      background-color: ${color.facebook};
-    }
+  button.confirm {
+    background-color: ${color.facebook};
+    &:hover {background-color: ${color.tres} !important}
   }
 `;
 
 export const AdmStyle = styled.div`
   display: grid;
   gap: 25px;
-  grid-template-areas: 'editpanel listconju';
+  grid-template-areas: 'admpanel listconju';
   grid-template-columns: min-content auto;
   margin: 0px auto;
-  max-width: ${props => props.maxsize ? `${props.maxsize}px` : "1250px"};
+
+  button.confirm {
+    border-radius: 8px;
+    padding: 10px !important;
+    width: 100%;
+    > span {text-align: center}
+    &:hover {
+      background-color: ${color.facebook};
+    }
+  }
+
   > ul {
     align-items: flex-start;
     display: flex;
@@ -69,6 +68,27 @@ export const AdmStyle = styled.div`
         }
       }
     }
+  }
+
+`;
+
+export const AdmPanel = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  grid-area: "admpanel";
+  button.tool {
+    align-items: center;
+    background: ${color.tres};
+    border-radius: 8px;
+    color: ${color.light};
+    display: inline-flex;
+    font-family: ${font.Kantumruy};
+    font-size: 17px;
+    font-weight: 100;
+    gap: 30px;
+    justify-content: flex-start;
+    width: 100%;
   }
 `;
 
@@ -109,8 +129,8 @@ export const Selectors = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 10px;
+  margin-bottom: 10px;
+  gap: 5px;
   > div {
     box-sizing: border-box;
     min-width: 100%;

@@ -1,4 +1,4 @@
-import {createContext, useEffect, useState, useRef} from "react";
+import {createContext, useEffect, useState} from "react";
 const url = `http://localhost:8080`;
 
 export const AuthenticationContext = createContext();

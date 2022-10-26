@@ -78,6 +78,7 @@ export const H2 = styled.h2`${h2}`;
 export const H3 = styled.h3`${h3}`;
 export const Btn = styled.button`
   ${btn}
+  background-color: ${color.tres};
   cursor: pointer;
   justify-content: center;
   margin: 0px auto;
@@ -124,25 +125,38 @@ export const Submit = styled(Input)`
 const breakpoints = [620, 900, 800, 1000, 720, 1150, 950, 310];
 export const mq =  breakpoints.map(bp => `@media (max-width: ${bp}px)`);
 
-export const BoxMarking = styled(React.forwardRef(({className, style, nome, pertence, type = "radio", change, active = 1, ref}) => {
-  const nomeLowerCase = (nome[0].toLowerCase()+nome.slice(1)).normalize("NFD");
+export const BoxMarking = styled(({className, style, name, pertence, type = "radio", active = 1, ref, onChange, checked=false}) => {
+  const nameLowerCase = (name[0].toLowerCase()+name.slice(1)).normalize("NFD");
   return (<div {...{className, style}}>
-    {!active ? '' : <input key="boxmarking" type={type} value="Conjuntos" name={pertence} id={nomeLowerCase} onChange={change} ref={ref}/>}
-    <label htmlFor={nomeLowerCase}>{nome}</label>
-    {!active ? '' : <span key="boxmarkingspan"/>}
+    {!active ? '' : 
+      <input 
+        type={type} 
+        value="Conjuntos" 
+        name={pertence} 
+        id={nameLowerCase} 
+        onChange={onChange} 
+        ref={ref} 
+        defaultChecked={checked}
+      />
+    }
+    <label htmlFor={nameLowerCase}>{name}</label>
+    {!active ? '' : <span></span>}
   </div>);
-}))`
+
+})`
   ${btn}
+  padding: 5px 10px; 
   background-color: ${color.quatro};
   > label {
     margin: 0px auto;
     position: relative;
   }
   > span {
-    border-radius: 100%;
-    height: 15px;
+    border-radius: 5px;
+    height: 12px;
     position: absolute;
-    width: 15px;
+    overflow: hidden;
+    width: 12px;
   }
   > input {
     cursor: pointer;
