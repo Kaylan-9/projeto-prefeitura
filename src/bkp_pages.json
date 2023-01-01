@@ -1,5 +1,0 @@
-{ 
-  "Geral" : ["", {
-    "Sistema de chamados":[3, "http://10.10.100.5/hesk/"]
-  }]
-}
