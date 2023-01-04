@@ -1,12 +1,13 @@
-import { useContext, useRef, useEffect, FormEvent } from 'react';
+import { useContext, useRef, useEffect } from 'react';
 import Input from '../input/Input';
-import { AuthContext } from '../../contexts/AuthContext';
+import { AuthContext, AuthType } from '../../contexts/AuthContext';
 import { BiUser, BiWindowClose } from "react-icons/bi";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { ModalContext } from '../../contexts/ModalContext';
 import colors from '../../styles/colors';
 import { css } from '@emotion/css';
 import FormLoginStyle from './FormLogin.style';
+import { Button } from '../../styles/button';
 
 const closeWindow = css`
   background-color: transparent;
@@ -16,27 +17,28 @@ const closeWindow = css`
 `;
 
 const Form = ({css}: any) => {
-  const {user, setUserMod} : any = useContext(AuthContext);
+  const {user, setUserMode} : AuthType = useContext(AuthContext);
   const username = useRef<HTMLInputElement>(null!);
   const userpass = useRef<HTMLInputElement>(null!);
   const {setModal, setIsModalVisible, isModalVisible, setFormModal} = useContext(ModalContext);
 
   useEffect(() => {
     setModal({
-      msg: user.msg,
+      msg: user?.msg ?? "",
       color: colors.red
     });
-  }, [setIsModalVisible, setModal, user.msg]);
+  }, [setIsModalVisible, setModal, user]);
 
 
-  function admlogin(e: FormEvent<HTMLInputElement>): void {
-    e.preventDefault();
+  function admlogin(): void {
     if (!isModalVisible) setIsModalVisible(true);
-    const auth = {
-      name: username.current.value,
-      password: userpass.current.value
-    };
-    setUserMod(auth);
+    if(typeof username.current.value==="string" && typeof userpass.current.value==="string") {
+      const auth =  {
+        name: username.current.value,
+        password: userpass.current.value 
+      };
+      setUserMode(auth);
+    }
   }
 
   return <FormLoginStyle css={css}>
@@ -45,12 +47,12 @@ const Form = ({css}: any) => {
         <BiWindowClose/>
       </button>
     </div>
-    <form className="main">
-      <h1>Acessar gerenciamento</h1>
-      <Input ref={username} id="username" value="identificador de administrador" Icon={<BiUser/>}/>
-      <Input ref={userpass} id="userpass" value="senha de administrador" type="password" Icon={<RiLockPasswordLine/>}/>
-      <input id="admlogin" type="submit" defaultValue="Entrar" onClick={admlogin}/>
-    </form>
+    <div className="main">
+      <h1>Login</h1>
+      <Input ref={username} id="username" value="nome" Icon={<BiUser/>}/>
+      <Input ref={userpass} id="userpass" value="senha" type="password" Icon={<RiLockPasswordLine/>}/>
+      <Button id="admlogin" type="button" onClick={admlogin}>Autenticar</Button>
+    </div>
   </FormLoginStyle>;
 }
 

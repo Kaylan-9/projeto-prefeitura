@@ -112,8 +112,6 @@ const contentsReducer = (state: any, action: any) => {
     } else lists.bookmarks.currentPage--;
   }
 
-  console.log(((lists.bookmarks.currentPage)*9)-lists.bookmarks.content.length)
-
   switch(action.type) {
     case "search": return {
       ...state,

@@ -7,7 +7,7 @@ const ContainerHomePageReports = styled(ContainerReports)`
   width: 100%;
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
   width: 100%;
   box-sizing: border-box;
   padding: 0 35px;
@@ -16,8 +16,8 @@ const ContainerHomePageReports = styled(ContainerReports)`
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
   ${mqs[2]} {
-    padding: 50px 0 25px 0;
     grid-template-columns: auto;
+    padding: 0 15px;
   }
 `;
 

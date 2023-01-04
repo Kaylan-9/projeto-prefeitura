@@ -6,14 +6,14 @@ import colors from "../styles/colors";
 import { AuthContext } from "./AuthContext";
 
 type ModelType = {
-  msg: string,
+  msg: string | number,
   color: string
 };
 
 type FormModelType = boolean;
 
 type ModalTypeContext = {
-  setModal: (value: ModelType) => void,
+  setModal: any,
   modal: ModelType,
   setIsModalVisible: (value: boolean) => void,
   isModalVisible: boolean,

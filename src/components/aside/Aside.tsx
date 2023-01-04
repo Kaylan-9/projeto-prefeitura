@@ -15,8 +15,7 @@ export const Aside: FunctionComponent<{children: ReactNode}> = ({children}) => {
     border-radius: 18px;  
     box-shadow: 
       rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
-      rgba(0, 0, 0, 0.06) 0px 0px 0px 1px,
-      ${theme?.colors?.primary} 0px -30px 1px 1px;
+      rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
     box-sizing: border-box;
     grid-area: nav;
     position: sticky;

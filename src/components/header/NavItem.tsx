@@ -30,7 +30,11 @@ export const BtnTheme = () => {
       return response;
     });
   };
-  return <NavItem onClick={toggleTheme} Icon={val_theme==="dark" ? IoMdSunny : IoMdMoon}/>;
+  return <NavItem 
+          onClick={toggleTheme} 
+          Icon={val_theme==="dark" ? IoMdMoon : IoMdSunny}
+          value={val_theme}
+  />;
 }
 
 export const BtnLogOut = () => {

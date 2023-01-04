@@ -5,10 +5,6 @@ import mqs from '../../styles/medias';
 import { ThemeProps } from '../../styles/theme';
 
 export const text_content = css`
-  background-color: white;
-  padding: 50px;
-  color: black;
-  padding-top: 20px;
   p {
     line-height: 30px;
     margin-top: 20px;
@@ -18,7 +14,7 @@ export const text_content = css`
 `;
 
 export const Report = styled.li`
-  background-color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.tertiary};
+  background-color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.secondary};
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   overflow: hidden;
   * {
@@ -37,9 +33,8 @@ export const Report = styled.li`
     align-items: center;
     justify-content: space-between;
     gap: 15px;
-    border-bottom: solid 1px white;
     > .date-content {
-      padding: 25px 50px;
+      padding: 10px 35px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -47,14 +42,21 @@ export const Report = styled.li`
       font-weight: bold;
       *, & {
         transform: scale(1.05);
-        color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.primary};
       }
     }
   }
-  > .text-content {
-    ${text_content}
-    > span > .link {
-      color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.primary};
+
+  > .inferior_content {
+    align-items: center;
+    display: grid;
+    grid-template-columns: auto min-content;
+    padding: 25px 35px;
+    color: black;
+    > .text-content {
+      ${text_content}
+    }
+    > .link {
+      margin-left: 35px;
       align-items: center;
       box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
       border: none;
@@ -65,6 +67,7 @@ export const Report = styled.li`
       font-weight: bold;
       gap: 10px;
       padding: 14px 15px;
+      writing-mode: vertical-lr;
       *:not(svg) {
         margin: 0 auto;
       }
@@ -72,6 +75,7 @@ export const Report = styled.li`
       display: inline;
     }
   }
+
   > h3 {
     color: ${colors.blue};
     font-family: Arial, Helvetica, sans-serif;  

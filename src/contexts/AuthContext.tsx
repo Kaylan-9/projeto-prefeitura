@@ -1,7 +1,7 @@
 import request from "../utils/request";
 import {createContext, useEffect, useState, ReactNode, useCallback} from "react";
 
-type UserTypes = {
+export type UserTypes = {
   _id?: string;
   name?: string;
   password?: string;
@@ -9,11 +9,11 @@ type UserTypes = {
   exists?: boolean
 }
 
-type AuthType = {
+export type AuthType = {
   user?: UserTypes;
   setUser?: (newState: UserTypes) => void;
   userMode?: UserTypes;
-  setUserMode?:  (newState: UserTypes) => void;
+  setUserMode?:  any;
 }
 
 const initialValue = {
@@ -31,7 +31,7 @@ export const AuthProvider = ({children} : {children: ReactNode}) => {
   let sessionUser: any = sessionStorage.getItem("user");
 
   sessionUser = sessionUser ? JSON.parse(sessionUser) : false;
-  if(sessionUser) {
+  if(sessionUser.name!==undefined && sessionUser.password!==undefined) {
     name = sessionUser.name;
     password = sessionUser.password;
   }
@@ -41,9 +41,10 @@ export const AuthProvider = ({children} : {children: ReactNode}) => {
 
   const init = useCallback(async () => {
     const data = await request('adms/login', 'POST', userMode);
-    setUser(data);
+    console.log(data);
     if(data.exists) {
       sessionStorage.setItem("user", JSON.stringify(data));
+      setUser(data);
     }
   }, [userMode]);
   

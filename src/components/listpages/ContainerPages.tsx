@@ -7,7 +7,7 @@ const ContainerPages = styled.div`
   flex-wrap: wrap;
   width: 100%;
   gap: 20px;
-  padding: 35px;
+  padding: 0px 35px;
   box-sizing: border-box;
   ${mqs[4]} {
     justify-content: space-between;

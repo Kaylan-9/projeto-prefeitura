@@ -5,14 +5,14 @@ import { ThemeProps } from '../../styles/theme';
 const FormStyle = styled.form`
   ${({css} : {css: string}) => css}
   margin: auto;
-  width: 450px;
+  max-width: 800px;
+  width: 100%;
   > h1 {
     margin-bottom: 40px;
     font-size: 1.5em;
   } 
   > div.main {  
     align-items: center;
-    background-color: ${({theme} : {theme: ThemeProps}) => theme?.colors?.secondary};
     border-radius: 15px;
     display: flex;
     flex-direction: column;

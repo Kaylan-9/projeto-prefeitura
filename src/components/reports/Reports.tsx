@@ -3,8 +3,9 @@ import { Report } from './Reports.style';
 import parse from 'html-react-parser';
 import LocalMarking from '../localmarking/LocalMarking';
 import { EditContext } from '../../contexts/EditContext';
-import { ContentContext } from '../../contexts/ContentContext';
+import { ContentContext, ContentContextType } from '../../contexts/ContentContext';
 import { BsFillCalendar2DateFill } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 
 interface ReportsType {
   start?: number
@@ -15,7 +16,7 @@ interface ReportsType {
 
 const Reports: FunctionComponent<ReportsType> = ({start=0, lenght, lenghtreport, editable=false}) => {
   const {edit, dispatch, select, setSelect} = useContext(EditContext);
-  const {infos} = useContext(ContentContext);
+  const {infos}: ContentContextType = useContext(ContentContext);
 
   const selectReport = (e: React.ChangeEvent<HTMLInputElement>, info: any) => {
     if(edit.flag==="a") {
@@ -39,7 +40,7 @@ const Reports: FunctionComponent<ReportsType> = ({start=0, lenght, lenghtreport,
       parser.parseFromString(content, 'text/html').body.childNodes
     );
     return parse(children
-      ?.filter((_, index) => index < 6)
+      ?.filter((_, index) => index < 3)
       ?.reduce((s, item) => s+(item.outerHTML ?? item.textContent), "")
     );
   };
@@ -57,17 +58,19 @@ const Reports: FunctionComponent<ReportsType> = ({start=0, lenght, lenghtreport,
       .filter(filterInitReport)
       .filter(filterLimit)
       .map((info: any, index: number) => lenghtreport===undefined || (typeof lenghtreport==="number" && index<=(lenghtreport-1)) ?
-        <Report key={info._id}>
+        (<Report key={info._id}>
           <div className='superior-content'>
             <div className="date-content"><BsFillCalendar2DateFill/>{date_content(info.date)}</div>
             {editable ? <LocalMarking name="checkbox-report" setCheck = {select[info._id]} funcClick={e => selectReport(e, info)}/> : null}
           </div>        
-          <div className='text-content'>{
-            text_content(info._content)}
-            <span><a className='link' href={`/info/${info._id}`}>Leia mais</a></span>
-          </div>  
-        </Report>
-        : null
+          <div className="inferior_content">
+            <div className='text-content'>{
+              text_content(info._content)}  
+            </div>  
+            <Link className='link' to={`/report/${info._id}`}>Leia mais</Link>
+          </div>
+        </Report>) :
+        null
     )}
   </>;
 }

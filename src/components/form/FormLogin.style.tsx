@@ -9,7 +9,7 @@ export const ToolsLogin = styled.div`
 const FormLoginStyle = styled.form`
   ${({css} : {css: string}) => css}
   margin: auto;
-  background-color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.primary};
+  background-color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.secondary};
   border-radius: 15px;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -18,9 +18,6 @@ const FormLoginStyle = styled.form`
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    background-color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.secondary};
-    margin-bottom: 35px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
   .main {
     width: 450px;
@@ -42,12 +39,13 @@ const FormLoginStyle = styled.form`
       padding: 12px 20px;
     }
     #admlogin {
-      background-color: ${colors.carbon};
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      margin-top: 25px;
-      padding: 12px 20px;
+      box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+      border-radius: 100px;
+      display: flex;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 14px 15px;
     }
     #btnfirst {background-color: ${colors.red}}
     > div.btns {

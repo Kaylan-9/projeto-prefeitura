@@ -1,10 +1,7 @@
 import {useContext, useEffect, useState, useCallback, FunctionComponent} from 'react';
-import AboutStyle from "./pages.style";
 import Header from "../components/header/Header";
 import { BiHome } from "react-icons/bi";
 import parse from 'html-react-parser';
-import { ModalContext } from '../contexts/ModalContext';
-import { BsGearWideConnected } from 'react-icons/bs';
 import { css } from '@emotion/css';
 import { useParams } from 'react-router-dom';
 import request from '../utils/request';
@@ -13,10 +10,10 @@ import { useTheme } from '@emotion/react';
 import { IPContext } from '../contexts/IPContext';
 import { MainInfo } from '../components/main/Main.style';
 import NavItem, { BtnLogin, BtnLogOut, BtnTheme } from '../components/header/NavItem';
+import { HomeStyle } from './Home';
 
 
 const Info: FunctionComponent<{}> = () => {
-  const {setFormModal} = useContext(ModalContext);
   const {ip} = useContext(IPContext);
   const [content, setContent] = useState<any>(<></>);
   const {id} = useParams();
@@ -35,19 +32,19 @@ const Info: FunctionComponent<{}> = () => {
     markAsViewer();
   }, []);
 
-  return <AboutStyle className = {css`
+  return <HomeStyle className = {css`
     background-color: ${theme?.colors?.secondary} !important;
   `}>
     <Header>
+      <BtnLogOut/>
       <NavItem to="/" Icon={BiHome}/>
       <BtnLogin/>
-      <BtnLogOut/>
       <BtnTheme/>
     </Header>
     <MainInfo>
       {content}
     </MainInfo>
-  </AboutStyle>;
+  </HomeStyle>;
 };
 
 export default Info;
