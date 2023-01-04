@@ -15,13 +15,15 @@ const PagesGroups = () => {
   const {select, setSelect, dispatch, edit} = useContext(EditContext);
 
   const updateContent = useCallback(async () => {
-    const currentPageData = (await request('groups/pages/all', 'POST', {n: contents.lists[mode].currentPage}));    
-    const iDLastItemList =  contents.lists.groups.content[contents.lists.groups.content.length-1]?._id;
-    const iDLastItemReq = await currentPageData[currentPageData.length-1]?._id;
+    if(mode==='groups' || mode==='edit') {
+      const currentPageData = (await request('groups/pages/all', 'POST', {n: contents.lists[mode].currentPage}));    
+      const iDLastItemList =  contents.lists.groups.content[contents.lists.groups.content.length-1]?._id;
+      const iDLastItemReq = await currentPageData[currentPageData.length-1]?._id;
 
-    if(iDLastItemReq!==undefined && iDLastItemReq!==iDLastItemList) {
-      handleContents({type: "content", mode, content: currentPageData});
-      setUpdateRef(oldRef=> oldRef+1);
+      if(iDLastItemReq!==undefined && iDLastItemReq!==iDLastItemList) {
+        handleContents({type: "content", mode, content: currentPageData});
+        setUpdateRef(oldRef=> oldRef+1);
+      }
     }
   }, [contents, updateRef, setUpdateRef, mode]);
 
@@ -71,7 +73,8 @@ const PagesGroups = () => {
 
   return ((mode==="groups" || mode==="edit") ? (<section ref={refObj}>
     <ListPagesWithGroups>{
-      contents.lists[mode].content.map((group) => ((mode==="edit" || group.pages.length!==0)
+      contents.lists[mode].content.map((group) => (
+      (mode==="edit" || group.pages.length!==0)
       ?
         (<PagesStyle key={group._id} color={group.color}>
           <TitlePages>

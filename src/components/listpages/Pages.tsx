@@ -130,13 +130,15 @@ const Pages = () => {
   const timer = useRef(0);
   const refObj = useRef<HTMLElement>(null);
 
- const updateContent = useCallback(async () => {
-    const currentPageData = (await request((mode==="bookmarks" ? 'users/pages' : 'pages/store'), 'POST', {ip, n: contents.lists[mode].currentPage}));    
-    const iDLastItemList = contents.lists[mode].content[contents.lists[mode].content.length-1]?._id;
-    const iDLastItemReq = await currentPageData[currentPageData.length-1]?._id;
-    if(iDLastItemReq!==undefined && iDLastItemReq!==iDLastItemList) {
-      handleContents({type: "content", mode, content: currentPageData});
-      setUpdateRef(oldRef=> oldRef+1);
+  const updateContent = useCallback(async () => {
+    if(mode==='pages' || mode==='bookmarks') {
+      const currentPageData = (await request((mode==="bookmarks" ? 'users/pages' : 'pages/store'), 'POST', {ip, n: contents.lists[mode].currentPage}));    
+      const iDLastItemList = contents.lists[mode].content[contents.lists[mode].content.length-1]?._id;
+      const iDLastItemReq = await currentPageData[currentPageData.length-1]?._id;
+      if(iDLastItemReq!==undefined && iDLastItemReq!==iDLastItemList) {
+        handleContents({type: "content", mode, content: currentPageData});
+        setUpdateRef(oldRef=> oldRef+1);
+      }
     }
   }, [contents, updateRef, setUpdateRef, mode]);
 
