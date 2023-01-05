@@ -49,10 +49,10 @@ export const PagesStyle = styled.li`
   ${medias[0]} {margin-bottom: 25px}
 `;
 
-export const PageStyle = styled.li<{theme?: ThemeProps, src: string}>`
+export const PageStyle = styled.li<{theme?: ThemeProps, src: string, pagesmode: string}>`
   break-inside: avoid;
   border-top: none;
-  border-radius: 15px; 
+  border-radius: 21px; 
   page-break-inside: avoid;
   display: flex;
   flex-wrap: wrap;
@@ -77,7 +77,7 @@ export const PageStyle = styled.li<{theme?: ThemeProps, src: string}>`
     align-items: center;
     display: flex;
     justify-content: center;
-    border-radius: 0 0 15px 15px;  
+    border-radius: 0 0 21px 21px;  
     button > svg {
       font-size: 25px; 
       transition: transform 350ms;
@@ -92,16 +92,19 @@ export const PageStyle = styled.li<{theme?: ThemeProps, src: string}>`
     background-size: cover !important;
     background-repeat: no-repeat !important;
     box-sizing: border-box;
-    border-radius: 0 0 19px 19px;
+    border-radius: 0 0 21px 21px;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    :hover {
-      .tools {
-        max-height: 100%;
-        padding: 20px 15px;
-      }
+    ${({pagesmode}) => pagesmode!=='edit' ?
+      `:hover {
+        .tools {
+          max-height: 100%;
+          padding: 20px 15px;
+        }
+      }` :
+      ''
     }
     a {
       min-height: calc(100% - 40px);
@@ -113,10 +116,14 @@ export const PageStyle = styled.li<{theme?: ThemeProps, src: string}>`
       display: flex;
       justify-content: space-between;
       gap: 15px;
-      max-height: 0;
-      padding: 0 15px;
+      ${({pagesmode}) => pagesmode!=='edit' ?
+        `max-height: 0;
+        padding: 0 15px;` :      
+        `max-height: 100%;
+        padding: 20px 15px;`
+      }
       overflow: hidden;
-      border-radius: 0 0 15px 15px;  
+      border-radius: 0 0 18px 18px;  
       span {
         font-weight: bold;
       }

@@ -16,7 +16,7 @@ import { MainAdmin } from "../components/main/Main.style";
 import ContainerReports from "../components/reports/ContainerReports";
 import  NavItem, { BtnLogOut, BtnTheme } from "../components/header/NavItem";
 import PagesGroups from "../components/listpages/PagesGroups";
-import { ContentPages } from "../components/listpages/ContainerPages";
+import ContainerPages, { ContentPages } from "../components/listpages/ContainerPages";
 import { ContentContext, ContentContextType } from "../contexts/ContentContext";
 import styled from "@emotion/styled";
 import { ThemeProps } from "../styles/theme";
@@ -77,10 +77,10 @@ export const AdminStyle = styled.div`
 `;
 
 const Admin = () => {
-  const {contents, handleContents}: ContentContextType = useContext(ContentContext);
+  const {setMode}: ContentContextType = useContext(ContentContext);
 
   useEffect(() => {
-    handleContents({type: "mode", mode: "edit"});
+    setMode("edit");
   }, []);
 
   return <AdminStyle>
@@ -92,12 +92,12 @@ const Admin = () => {
     </Header>
 
     <AsideNavContextProvider>
-      <Aside>
-        <AsideContentAdmin/>
-      </Aside>
-      <MainAdmin>
+      <ContainerPages>
+        <Aside>
+          <AsideContentAdmin/>
+        </Aside>
         <MainContent/>
-      </MainAdmin>
+      </ContainerPages>
     </AsideNavContextProvider>
   </AdminStyle>;
 }

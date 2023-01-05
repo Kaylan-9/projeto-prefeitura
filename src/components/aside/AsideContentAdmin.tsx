@@ -4,7 +4,7 @@ import { BiAddToQueue, BiGrid } from "react-icons/bi";
 import { RiDeleteBinLine, RiEdit2Line, RiPagesLine } from "react-icons/ri";
 import { VscGraph } from "react-icons/vsc";
 import { TiEdit } from "react-icons/ti";
-import { BiTrash } from "react-icons/bi";
+import { HiTrash } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import { AsideNavContext } from "../../contexts/AsideNavContext";
 import { ContentContext } from "../../contexts/ContentContext";
@@ -13,7 +13,7 @@ import colors from "../../styles/colors";
 import { ThemeProps } from "../../styles/theme";
 import request from "../../utils/request";
 import { css } from "@emotion/css";
-import { css as csst } from "@emotion/react";
+import { css as csst, Theme } from "@emotion/react";
 
 
 interface ItemModel {
@@ -25,64 +25,45 @@ interface ItemModel {
   funcClick?: () => void;
 };
 
-const SubItemStyle = styled.div`
-  > button {
-    ${({select} : {select?: boolean}) => select ? csst`
-      background-color: rgba(0,255,174,0.2497373949579832);
-    ` : ``}
-    justify-content: space-between;
+const SubItemStyle = styled.div<{select: boolean, theme?: ThemeProps}>`
+  display: flex;
+  flex-direction: column;
+  padding: 5px 20px;
+  button {
     align-items: center;
     display: flex;
-    font-size: 16px;
-    font-weight: 500;
-    width: 100%;
+    gap: 12.5px;
+    padding: 10px 25px;
     cursor: pointer;
-    > svg {
-      color: ${colors.green};
-      padding: 15px;
-      margin-left: 25px;
-      font-size: 16px;
-      * {color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.tertiary}}
-    }
-    > p {
-      margin: 0 auto;
-      width: 180px;
-      color:  ${({theme}: {theme?: ThemeProps}) => theme?.colors?.tertiary};
-    }
-    :hover {
-      background-color: #1d7761;
-    }
+    ${({select, theme}) => select ? `
+      background-color: #00ff95;
+      border-radius: 35px;
+      cursor: default !important;
+      * {color: ${theme?.colors?.primary};}
+    ` : 
+    ''}
   }
 `;
 
-const ItemStyle = styled(SubItemStyle)<{toggle: boolean}>`
+const ItemStyle = styled.div<{toggle: boolean, theme?: ThemeProps}>`
+  display: flex;
+  flex-direction: column;
+  padding: 25px 35px;
+  padding-bottom: 0 !important;
   > button {
-    > p {
-      font-size: 16px;
-      font-weight: bold;
-      color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.tertiary};
-    }
-    > svg {
-      * {color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.tertiary}}
-      font-size: 19px;
-    }
-  ${({toggle}: {toggle?: boolean}) => toggle ? csst`
-    svg {
-      padding: 15px;
-      margin-top: 15px;
-      margin-bottom: 15px;
-      background: rgb(0,255,174);
-      border-radius: 100%;  
-    }
-  ` : ''}
-    :hover {
-      background: rgb(0,255,174);
-      color: ${({theme} : {theme?: ThemeProps}) => theme?.colors?.quaternary};
-      svg {
-        transition: padding-left 250ms;
-      }
-    }
-  }  
+    align-items: center;
+    display: flex;
+    gap: 12.5px;
+    padding: 15px 25px;
+    cursor: pointer;
+    ${({toggle, theme}) => toggle ? `
+      background-color: #00ff95;
+      border-radius: 35px;
+      cursor: default !important;
+      * {color: ${theme?.colors?.primary};}
+    ` : 
+    ''}
+  }
 `;
 
 
@@ -156,15 +137,20 @@ const AsideContentAdmin: FunctionComponent<{}> = () => {
         }} className={css`
           font-weight: bold;
           font-size: 20px;
-          background-color: ${colors.red};
           border-radius: 100%;
-          padding: 15px;
+          width: 100%;
+          button {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+          }
           cursor: pointer;
           * {
-            fill: white;
+            fill: ${colors.red};
           }
         `}> 
-          <BiTrash/>
+          <HiTrash/>
         </button> 
         : null
       }

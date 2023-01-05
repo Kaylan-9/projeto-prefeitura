@@ -72,10 +72,11 @@ export const Page = ({data, index, ip, color, className}: PageType & {className?
   return (<PageStyle className={className}
     key={_id} 
     color={color}
+    pagesmode={mode}
     src={`'${server}/images/${imagename}.jpeg'`}
   >
     <a href={link} target="blank">{name}</a>
-    {((!likes.includes(_id) || mode=="bookmarks") ?
+    {((!likes.includes(_id) || mode==="bookmarks" || mode==="edit") ?
       (<div className="image" onMouseEnter={websiteisonline}>
         <a href={link} target="blank"></a>
         <div className="tools">
@@ -86,18 +87,21 @@ export const Page = ({data, index, ip, color, className}: PageType & {className?
             ) :
             null
           )}
-          <button className="btn-like" onClick={() => {
-            if(mode=="pages") {
-              liked();
-            } else if(mode=="bookmarks") {
-              disliked();
-            }
-          }}>
-            {(mode=="pages" ?
-              (<MdFavorite/>) :
-              (<BsFillBookmarkXFill/>)
-            )}
-          </button>
+          {mode!=="edit" ?
+            (<button className="btn-like" onClick={() => {
+              if(mode=="pages") {
+                liked();
+              } else if(mode=="bookmarks") {
+                disliked();
+              }
+            }}>
+              {(mode=="pages" ?
+                (<MdFavorite/>) :
+                (<BsFillBookmarkXFill/>)
+              )}
+            </button>) :
+            null
+          }
           <span className={css`
             color: ${isOnline=="on.line" ? theme?.colors?.tertiary : colors.red} !important;
           `}>
@@ -117,7 +121,7 @@ export const Page = ({data, index, ip, color, className}: PageType & {className?
 export const PageWithGroups = styled(Page)`
   box-shadow: none;
   .image {
-    border-radius: 10px !important;
+    border-radius: 21px !important;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
 `;

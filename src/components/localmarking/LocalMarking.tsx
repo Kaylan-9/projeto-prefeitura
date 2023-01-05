@@ -14,7 +14,7 @@ interface Props {
 const Checkbox = styled.div`
   .ikxBAC {
     appearance: none;
-    background-color: ${({theme} : {theme: ThemeProps}) => theme?.colors?.secondary};
+    background-color: ${({theme} : {theme: ThemeProps}) => theme?.colors?.quaternary};
     border-radius: 15px;
     border-style: none;
     flex-shrink: 0;
@@ -54,7 +54,7 @@ const Checkbox = styled.div`
   }
 
   .ikxBAC:hover {
-    background-color: ${({theme} : {theme: ThemeProps}) => theme?.colors?.secondary};
+    background-color: ${({theme} : {theme: ThemeProps}) => theme?.colors?.quaternary};
     transition-duration: 0s;
   }
 
