@@ -22,12 +22,16 @@ const SearchStyle = styled.div<{theme?: ThemeProps}>`
     display: grid;
     align-items: center;
     grid-template-columns: min-content auto;
+    gap: 25px;
     button[type="button"] {
+      background-color: ${({theme}) => theme?.colors?.quaternary};
+      padding: 11px 12px;
+      border-radius: 50px;
       cursor: pointer;
       svg {
         font-size: 25px;  
         * {
-          color: ${({theme}) => theme?.colors?.tertiary};
+          color: ${({theme}) => theme?.colors?.primary};
         }
       }
       &::after {

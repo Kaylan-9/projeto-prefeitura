@@ -120,6 +120,12 @@ export const Page = ({data, index, ip, color, className}: PageType & {className?
 
 export const PageWithGroups = styled(Page)`
   box-shadow: none;
+  a {
+    background-color: transparent;
+  }
+  .container-dislike {
+    border-radius: 21px !important;
+  }
   .image {
     border-radius: 21px !important;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -177,12 +183,13 @@ const Pages = () => {
   return ((mode==="pages" || mode==="bookmarks") ? (<section ref={refObj}>
     <ListPagesWithoutGroups className={css`grid-template-columns: repeat(minmax(150px, 1fr));`}>{
       contents.lists[mode][!contents.search ? "content" : "content_search"]
-        .map((page: PageDataType | any, index: number) =>  <Page 
-          key={page._id}
-          data={page}
-          index={index}
-          ip={ip}
-      />
+        .map((page: PageDataType | any, index: number) =>  
+          <Page 
+            key={page._id}
+            data={page}
+            index={index}
+            ip={ip}
+          />
     )}</ListPagesWithoutGroups>
   </section>) : null);
 }

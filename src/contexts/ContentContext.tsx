@@ -102,7 +102,7 @@ const initialValue = {
 
 
 const contentsReducer = (state: any, action: any) => {
-  let {lists, search, content_search} = state;      
+  let {lists, search} = state;      
 
   if(action.type==="content") {
     lists[action.mode] = {

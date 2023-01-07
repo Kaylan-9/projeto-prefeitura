@@ -3,11 +3,11 @@ import Input, { InputColor } from '../input/Input';
 import { EditContext } from '../../contexts/EditContext';
 import { ContentContext } from '../../contexts/ContentContext';
 import request from '../../utils/request';
-import FormStyle from './Form.style';
+import FormStyle from './FormStyle';
 
 const FormGroup = () => {
   const {edit, dispatch} : any = useContext(EditContext);
-  const {setPages} = useContext(ContentContext);
+  // const {} = useContext(ContentContext);
   const groupname = useRef<HTMLInputElement>(null!);
   const groupdescricao = useRef<HTMLInputElement>(null!);
   const groupcolor = useRef<HTMLInputElement>(null!);
@@ -37,7 +37,7 @@ const FormGroup = () => {
     } 
 
     await request("groups/"+mode, method, body);
-    setPages(await request('groups/pages/all', 'GET'));
+    
     dispatch({type: "reset"});
   };
   
@@ -50,7 +50,7 @@ const FormGroup = () => {
     }
   }, [edit]);
 
-  return <FormStyle css={``}>
+  return <FormStyle>
     <div className="main">
       <Input ref={groupname} id="groupname" value="nome do grupo"/>
       <Input ref={groupdescricao} id="groupdescricao" value="descrição do grupo"/>

@@ -24,7 +24,7 @@ export const PagesStyle = styled.li`
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   border-radius: 15px;
-  background-color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.primary};
+  background-color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.secondary};
   box-sizing: border-box;
   width: 100%;
   overflow: hidden;
@@ -142,7 +142,7 @@ export const PageStyle = styled.li<{theme?: ThemeProps, src: string, pagesmode: 
 
 export const ListPagesWithoutGroups = styled.ul`
   display: grid !important;
-  gap: 50px;
+  gap: 35px;
   margin-bottom: 550px;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 `;

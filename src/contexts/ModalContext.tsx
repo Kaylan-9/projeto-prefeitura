@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import {createContext, useEffect, useState, ReactNode, useContext} from "react";
-import Form from "../components/form/FormLogin";
+import Form from "../components/forms/FormLogin";
 import ModalAlert from "../components/modalalert/ModalAlert";
 import colors from "../styles/colors";
 import { AuthContext } from "./AuthContext";

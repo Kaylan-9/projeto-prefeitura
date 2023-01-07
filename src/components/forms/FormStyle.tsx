@@ -2,11 +2,13 @@ import styled from '@emotion/styled';
 import colors from '../../styles/colors';
 import { ThemeProps } from '../../styles/theme';
 
-const FormStyle = styled.form`
-  ${({css} : {css: string}) => css}
-  margin: auto;
-  max-width: 800px;
-  width: 100%;
+const FormStyle = styled.form<{theme?: ThemeProps}>`
+  background-color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.secondary};
+  border-radius: 15px;
+  max-width: 380px !important;
+  width: 380px;
+  position: relative;
+  transform: translateX(-50%);
   > h1 {
     margin-bottom: 40px;
     font-size: 1.5em;

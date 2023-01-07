@@ -1,9 +1,11 @@
 import { useContext, useRef, useEffect } from 'react';
 import Input from '../input/Input';
 import { EditContext } from '../../contexts/EditContext';
-import { ContentContext } from '../../contexts/ContentContext';
+import { ContentContext, ContentContextType } from '../../contexts/ContentContext';
 import request from '../../utils/request';
-import FormStyle from './Form.style';
+import FormStyle from './FormStyle';
+import { useTheme } from '@emotion/react';
+import { ThemeProps } from '../../styles/theme';
 
 type PageDataType = {
   _idgroup?: string,
@@ -13,9 +15,11 @@ type PageDataType = {
 
 const FormPage = () => {
   const {edit, dispatch} : any = useContext(EditContext);
-  const {setPages} = useContext(ContentContext);
+  const {handleContents}: ContentContextType = useContext(ContentContext);
   const pagename = useRef<HTMLInputElement>(null!);
   const pagelink = useRef<HTMLInputElement>(null!);
+  const theme: ThemeProps = useTheme();
+
   const handleForm = async (e: any) => {
     e.preventDefault();
     let body: PageDataType = {};
@@ -35,7 +39,7 @@ const FormPage = () => {
     if(link!==pagelink.current.value && pagename.current.value!=="") body.link= pagelink.current.value;
 
     await request("pages/"+mode, method, body);
-    setPages(await request('groups/pages/all', 'GET'));
+    handleContents({type: "modifyItems", body, method});
     dispatch({type: "reset"});
   };
 
@@ -47,7 +51,7 @@ const FormPage = () => {
     }
   }, [edit]);
 
-  return <FormStyle css={``}>
+  return <FormStyle>
     <div className="main">
       <Input ref={pagename} id="pagename" value="nome da página"/>
       <Input ref={pagelink} id="pagelink" value="link da página"/>

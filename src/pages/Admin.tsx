@@ -1,12 +1,12 @@
 import { useContext, useEffect } from "react";
 import Header from "../components/header/Header";
 import { EditContext } from "../contexts/EditContext";
-import FormPage from "../components/form/FormPage";
-import FormGroup from "../components/form/FormGroup";
+import FormPage from "../components/forms/FormPage";
+import FormGroup from "../components/forms/FormGroup";
 import Aside from "../components/aside/Aside";
 import AsideContentAdmin from "../components/aside/AsideContentAdmin";
 import { AsideNavContext, AsideNavContextProvider } from "../contexts/AsideNavContext";
-import FormAddInfo from "../components/form/FormAddInfo";
+import FormAddInfo from "../components/forms/FormAddInfo";
 import Reports from "../components/reports/Reports";
 import { css } from "@emotion/css";
 import { BiHome } from "react-icons/bi";
@@ -92,7 +92,9 @@ const Admin = () => {
     </Header>
 
     <AsideNavContextProvider>
-      <ContainerPages>
+      <ContainerPages className={css`
+        padding: 0 35px !important;
+      `}>
         <Aside>
           <AsideContentAdmin/>
         </Aside>

@@ -13,6 +13,7 @@ import colors from "../../styles/colors";
 import { ThemeProps } from "../../styles/theme";
 import request from "../../utils/request";
 import { css } from "@emotion/css";
+import mqs from "../../styles/medias";
 
 interface ItemModel {
   value: string;
@@ -23,11 +24,14 @@ interface ItemModel {
   funcClick?: () => void;
 };
 
+
 const SubItemStyle = styled.div<{select: boolean, theme?: ThemeProps}>`
   display: flex;
   flex-direction: column;
   padding: 5px 20px;
   button {
+    font-size: 15px !important;
+    font-weight: bold !important;
     align-items: center;
     display: flex;
     gap: 12.5px;
@@ -48,7 +52,11 @@ const ItemStyle = styled.div<{toggle: boolean, theme?: ThemeProps}>`
   flex-direction: column;
   padding: 25px 35px;
   padding-bottom: 0 !important;
+  font-size: 15px;
+  font-weight: bold;
   > button {
+    font-size: 15px !important;
+    font-weight: bold !important;
     align-items: center;
     display: flex;
     gap: 12.5px;
@@ -109,7 +117,15 @@ const AsideContentAdmin: FunctionComponent<{}> = () => {
   </>;
 
   return <>
-    <nav>
+    <nav className={css`
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: center;
+      ${mqs[3]} {
+        flex-direction: row;
+      }
+    `}>
       <Item value="grupos" Icon={BiGrid} funcClick={() => dispatch({type: "flag", flag: "g"})} Content={Content}/>
       <Item value="páginas" Icon={RiPagesLine} funcClick={() => {dispatch({type: "flag", flag: "p"})}} Content={Content}/> 
       <Item value="estátisticas" Icon={VscGraph} />
