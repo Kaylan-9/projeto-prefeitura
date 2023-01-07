@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import mqs from "../../styles/medias";
 import { ThemeProps } from "../../styles/theme";
 
-export const HeaderStyle = styled.header`
+export const HeaderStyle = styled.header<{theme?: ThemeProps}>`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
@@ -12,9 +12,6 @@ export const HeaderStyle = styled.header`
   box-sizing: border-box;
   gap: 10px;
   grid-area: h;
-  .search {
-    grid-area: search;
-  }
   #logo {
     grid-area: logo;
     span {

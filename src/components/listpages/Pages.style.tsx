@@ -24,7 +24,7 @@ export const PagesStyle = styled.li`
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   border-radius: 15px;
-  background-color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.secondary};
+  background-color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.primary};
   box-sizing: border-box;
   width: 100%;
   overflow: hidden;

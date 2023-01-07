@@ -31,9 +31,9 @@ export const BtnTheme = () => {
     });
   };
   return <NavItem 
-          onClick={toggleTheme} 
-          Icon={val_theme==="dark" ? IoMdMoon : IoMdSunny}
-          value={val_theme}
+    onClick={toggleTheme} 
+    Icon={val_theme==="dark" ? IoMdMoon : IoMdSunny}
+    value={val_theme}
   />;
 }
 

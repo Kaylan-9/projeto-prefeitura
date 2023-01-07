@@ -13,10 +13,10 @@ export const text_content = css`
   }  
 `;
 
-export const Report = styled.li`
-  background-color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.secondary};
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+export const Report = styled.li<{theme?: ThemeProps}>`
+  background-color: ${({theme}) => theme?.colors?.secondary};
   overflow: hidden;
+  border: solid 2px ${({theme}) => theme?.colors?.primary};
   * {
     -webkit-touch-callout: text;
     -webkit-user-select: text;
@@ -58,8 +58,7 @@ export const Report = styled.li`
     > .link {
       margin-left: 35px;
       align-items: center;
-      box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-      border: none;
+      border: solid 2px ${({theme}) => theme?.colors?.primary};
       border-radius: 100px;
       display: flex;
       font-family: Arial, Helvetica, sans-serif;
@@ -71,11 +70,9 @@ export const Report = styled.li`
       *:not(svg) {
         margin: 0 auto;
       }
-      box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
       display: inline;
     }
   }
-
   > h3 {
     color: ${colors.blue};
     font-family: Arial, Helvetica, sans-serif;  

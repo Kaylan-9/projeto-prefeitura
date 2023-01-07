@@ -13,8 +13,6 @@ import colors from "../../styles/colors";
 import { ThemeProps } from "../../styles/theme";
 import request from "../../utils/request";
 import { css } from "@emotion/css";
-import { css as csst, Theme } from "@emotion/react";
-
 
 interface ItemModel {
   value: string;
@@ -39,7 +37,7 @@ const SubItemStyle = styled.div<{select: boolean, theme?: ThemeProps}>`
       background-color: #00ff95;
       border-radius: 35px;
       cursor: default !important;
-      * {color: ${theme?.colors?.primary};}
+      * {color: white;}
     ` : 
     ''}
   }
@@ -60,7 +58,8 @@ const ItemStyle = styled.div<{toggle: boolean, theme?: ThemeProps}>`
       background-color: #00ff95;
       border-radius: 35px;
       cursor: default !important;
-      * {color: ${theme?.colors?.primary};}
+      * {color: #000000;}
+      font-weight: bold;
     ` : 
     ''}
   }

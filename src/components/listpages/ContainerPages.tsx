@@ -1,14 +1,16 @@
 import styled from "@emotion/styled";
 import mqs, { sizes } from "../../styles/medias";
+import { ThemeProps } from "../../styles/theme";
 
-const ContainerPages = styled.div`
+const ContainerPages = styled.div<{theme?: ThemeProps}>`
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
   width: 100%;
   gap: 20px;
-  padding: 0px 35px;
+  padding: 200px 35px 0 35px;
   box-sizing: border-box;
+  background-color: ${({theme}) => theme?.colors?.primary};
   ${mqs[4]} {
     justify-content: space-between;
   }

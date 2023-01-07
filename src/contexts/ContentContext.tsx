@@ -32,19 +32,24 @@ interface contentsType {
   search: boolean,
   lists: {
     "pages": listItemType & {
-      content: PageDataType[] 
+      content: PageDataType[],
+      content_search: PageDataType[], 
     },
     "bookmarks": listItemType & {
-      content: PageDataType[]
+      content: PageDataType[],
+      content_search: PageDataType[], 
     }
     "groups": listItemType & {
-      content: GroupDataType[]
+      content: GroupDataType[],
+      content_search: GroupDataType[]
     },
     "edit": listItemType & {
-      content: GroupDataType[]
+      content: GroupDataType[],
+      content_search: GroupDataType[]
     },
     [key: string]: listItemType & {
-      content: PageDataType[] | GroupDataType[] | void[]
+      content: PageDataType[] | GroupDataType[] | void[],
+      content_search: PageDataType[] | GroupDataType[] | void[]
     }
   }
 }
@@ -68,19 +73,23 @@ const initialValue = {
     lists: {
       "pages": {
         currentPage: 0,
-        content: []
+        content: [],
+        content_search: [],
       },
       "bookmarks": {
         currentPage: 0,
-        content: []
+        content: [],
+        content_search: [],
       },
       "groups": {
         currentPage: 0,
-        content: []
+        content: [],
+        content_search: [],
       },
       "edit": {
         currentPage: 0,
-        content: []
+        content: [],
+        content_search: [],
       }
     }
   },
@@ -93,7 +102,8 @@ const initialValue = {
 
 
 const contentsReducer = (state: any, action: any) => {
-  let {lists} = state;      
+  let {lists, search, content_search} = state;      
+
   if(action.type==="content") {
     lists[action.mode] = {
       currentPage: (lists[action.mode].currentPage+1),
@@ -110,23 +120,31 @@ const contentsReducer = (state: any, action: any) => {
         lists.bookmarks.currentPage++;
       }
     } else lists.bookmarks.currentPage--;
+  } else if(action.type==="search") {
+    search = action.search!=="" ? action.search : false;
+    if(action.mode==="pages") lists.pages.content_search = action.content_search;
+    if(action.mode==="groups") lists.groups.content_search = action.content_search;
   }
 
   switch(action.type) {
     case "search": return {
-      ...state,
+      search,
+      lists
     };
     case "mark": return {
       ...state,
-      lists
+      lists,
+      search: false
     };
     case "markoff": return {
       ...state,
-      lists
+      lists,
+      search: false
     }
     case "content": return {
       ...state,
-      lists
+      lists,
+      search: false
     }
 
   }

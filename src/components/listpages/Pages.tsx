@@ -176,11 +176,12 @@ const Pages = () => {
 
   return ((mode==="pages" || mode==="bookmarks") ? (<section ref={refObj}>
     <ListPagesWithoutGroups className={css`grid-template-columns: repeat(minmax(150px, 1fr));`}>{
-      contents.lists[mode].content.map((page: PageDataType | any, index: number) =>  <Page 
-        key={page._id}
-        data={page}
-        index={index}
-        ip={ip}
+      contents.lists[mode][!contents.search ? "content" : "content_search"]
+        .map((page: PageDataType | any, index: number) =>  <Page 
+          key={page._id}
+          data={page}
+          index={index}
+          ip={ip}
       />
     )}</ListPagesWithoutGroups>
   </section>) : null);

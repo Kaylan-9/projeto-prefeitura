@@ -73,8 +73,8 @@ const PagesGroups = () => {
 
   return ((mode==="groups" || mode==="edit") ? (<section ref={refObj}>
     <ListPagesWithGroups>{
-      contents.lists[mode].content.map((group) => (
-      (mode==="edit" || group.pages.length!==0)
+      contents.lists[mode][!contents.search ? "content" : "content_search"].map((group) => (
+      (mode==="edit" || group?.pages.length!==0)
       ?
         (<PagesStyle key={group._id} color={group.color}>
           <TitlePages>
