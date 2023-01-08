@@ -4,8 +4,7 @@ import { EditContext } from '../../contexts/EditContext';
 import { ContentContext, ContentContextType } from '../../contexts/ContentContext';
 import request from '../../utils/request';
 import FormStyle from './FormStyle';
-import { useTheme } from '@emotion/react';
-import { ThemeProps } from '../../styles/theme';
+
 
 type PageDataType = {
   _idgroup?: string,
@@ -18,7 +17,6 @@ const FormPage = () => {
   const {handleContents}: ContentContextType = useContext(ContentContext);
   const pagename = useRef<HTMLInputElement>(null!);
   const pagelink = useRef<HTMLInputElement>(null!);
-  const theme: ThemeProps = useTheme();
 
   const handleForm = async (e: any) => {
     e.preventDefault();

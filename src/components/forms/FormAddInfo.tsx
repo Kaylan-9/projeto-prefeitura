@@ -3,14 +3,14 @@ import { Editor } from '@tinymce/tinymce-react';
 import request from '../../utils/request';
 import { css } from '@emotion/css';
 import { EditContext } from '../../contexts/EditContext';
-import { ContentContext } from '../../contexts/ContentContext';
+import { ContentContext, ContentContextType } from '../../contexts/ContentContext';
 import { text_content } from '../reports/Reports.style';
 
 
 const FormAddInfo = ({area}: {area: string}) => {
   const editorRef = useRef<any>(null!);
   const {edit} = useContext(EditContext);
-  const {setInfos} = useContext(ContentContext);
+  const {setInfos}: ContentContextType = useContext(ContentContext);
   const initialText = "Digite o informe desejado!";
 
   const handleSend = async () => {

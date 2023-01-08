@@ -7,8 +7,9 @@ const FormStyle = styled.form<{theme?: ThemeProps}>`
   border-radius: 15px;
   max-width: 380px !important;
   width: 380px;
-  position: relative;
+  position: absolute;
   transform: translateX(-50%);
+  left: 50%;
   > h1 {
     margin-bottom: 40px;
     font-size: 1.5em;
