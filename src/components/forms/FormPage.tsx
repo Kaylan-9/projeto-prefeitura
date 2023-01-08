@@ -1,4 +1,4 @@
-import { useContext, useRef, useEffect } from 'react';
+import { useContext, useRef, useEffect, useCallback } from 'react';
 import Input from '../input/Input';
 import { EditContext } from '../../contexts/EditContext';
 import { ContentContext, ContentContextType } from '../../contexts/ContentContext';
@@ -14,11 +14,11 @@ type PageDataType = {
 
 const FormPage = () => {
   const {edit, dispatch} : any = useContext(EditContext);
-  const {handleContents}: ContentContextType = useContext(ContentContext);
+  const {setResetContent, handleContents}: ContentContextType = useContext(ContentContext);
   const pagename = useRef<HTMLInputElement>(null!);
   const pagelink = useRef<HTMLInputElement>(null!);
 
-  const handleForm = async (e: any) => {
+  const handleForm = useCallback(async (e: any) => {
     e.preventDefault();
     let body: PageDataType = {};
     let name = ""; 
@@ -37,9 +37,10 @@ const FormPage = () => {
     if(link!==pagelink.current.value && pagename.current.value!=="") body.link= pagelink.current.value;
 
     await request("pages/"+mode, method, body);
-    handleContents({type: "modifyItems", body, method});
+    setResetContent((oldResetContent: boolean) => !oldResetContent);
+    handleContents({type: "modifyItems"});
     dispatch({type: "reset"});
-  };
+  }, [setResetContent]);
 
   useEffect(() => {
     if(edit.mod==="u") {

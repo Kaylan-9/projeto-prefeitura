@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { IPContext } from '../../contexts/IPContext';
-import { ContentContext, PageDataType, PagesDataType } from '../../contexts/ContentContext';
+import { ContentContext, ContentContextType, PageDataType } from '../../contexts/ContentContext';
 import request from '../../utils/request';
 import { ListPagesWithGroups, PagesStyle, PageStyle, TitlePages } from './Pages.style';
 
@@ -25,6 +25,7 @@ const Page = ({data, color}: PageType) => {
   const {_id, name, imagename, link} = data;
   const {select, setSelect, dispatch, edit} = useContext(EditContext);
   const [isOnline, setIsOnline] = useState("");
+  const {mode}: ContentContextType = useContext(ContentContext);
 
   const handleChecked = (e:  React.ChangeEvent<HTMLInputElement>) => {  
     const {checked} = e.target;
@@ -53,6 +54,7 @@ const Page = ({data, color}: PageType) => {
     key={_id} 
     color={color}  
     src={`"${server}/images/${imagename}.jpeg"`}
+    pagesmode={mode}
   >
     <a href={link} target="blank">{name}</a>
     <a href={link} target="blank" className="image"></a>
@@ -93,7 +95,7 @@ const Pages = () => {
 
   return <section>
     <ListPagesWithGroups>{
-      pages.map((item: PagesDataType | any) => 
+      pages.map((item: PageDataType | any) => 
         <PagesStyle key={item._id} color={item.color}>
           <TitlePages>
             {item.name}

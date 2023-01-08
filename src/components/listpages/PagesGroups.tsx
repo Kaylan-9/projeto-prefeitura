@@ -8,7 +8,7 @@ import LocalMarking from '../localmarking/LocalMarking';
 
 
 const PagesGroups = () => {
-  const {mode, contents, handleContents}: ContentContextType = useContext(ContentContext);
+  const {mode, resetContent, contents, handleContents}: ContentContextType = useContext(ContentContext);
   const [updateRef, setUpdateRef] = useState<number>(0);
   const timer = useRef(0);
   const refObj = useRef<HTMLElement>(null);
@@ -53,7 +53,7 @@ const PagesGroups = () => {
     if(contents.lists[mode].currentPage===0) {
       updateContent();
     }
-  }, [mode]);
+  }, [mode, resetContent]);
 
   const handleChecked = (e: React.ChangeEvent<HTMLInputElement>, data: any) => { 
     const {checked} = e.target;

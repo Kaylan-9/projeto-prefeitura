@@ -7,10 +7,9 @@ const InputStyle = styled.div`
   margin-bottom: 30px;
   width: 100%;
   > label {
-    font-weight: 450;
+    font-weight: bold;
     font-size: 16px;
     margin-bottom: 5px;
-    display: flex;
     gap: 15px;
   }
   > input {

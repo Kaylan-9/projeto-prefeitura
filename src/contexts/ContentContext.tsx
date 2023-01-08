@@ -63,6 +63,8 @@ export interface ContentContextType {
   setInfos: (newState: any) => void;
   likes: string[] | [];
   setLikes: (oldLikes: any) => void;
+  resetContent: boolean;
+  setResetContent: (oldResetContent: any) => void;
 }
 
 const initialValue = {
@@ -94,6 +96,8 @@ const initialValue = {
     }
   },
   handleContents: () => null,
+  resetContent: false,
+  setResetContent: () => null,
   infos: [],
   setInfos: () => {},
   likes: [], 
@@ -124,7 +128,20 @@ const contentsReducer = (state: any, action: any) => {
     search = action.search!=="" ? action.search : false;
     if(action.mode==="pages") lists.pages.content_search = action.content_search;
     if(action.mode==="groups") lists.groups.content_search = action.content_search;
+  } 
+  
+  
+  else if(action.type==="modifyItems") {
+    lists.pages.currentPage= 0;
+    lists.pages.content= [];
+    lists.bookmarks.currentPage= 0;
+    lists.bookmarks.content= [];
+    lists.groups.currentPage= 0;
+    lists.groups.content= [];
+    lists.edit.currentPage= 0;
+    lists.edit.content= [];
   }
+
 
   switch(action.type) {
     case "search": return {
@@ -146,7 +163,10 @@ const contentsReducer = (state: any, action: any) => {
       lists,
       search: false
     }
-
+    case "modifyItems": return {
+      ...state,
+      lists
+    };
   }
 };
 
@@ -156,6 +176,7 @@ export const ContentContextProvider = ({children}: {children: ReactNode}) => {
   const [infos, setInfos] = useState(initialValue.infos);
   const [likes, setLikes] = useState([]);
   const [mode, setMode] = useState(initialValue.mode);
+  const [resetContent, setResetContent] = useState(initialValue.mode);
   const [contents, handleContents] = useReducer(contentsReducer, initialValue.contents);
 
   const load_favorite_pages = useCallback(async () => { 
@@ -184,6 +205,7 @@ export const ContentContextProvider = ({children}: {children: ReactNode}) => {
   return <ContentContext.Provider value={
     {
       contents, handleContents,
+      resetContent, setResetContent,
       likes, setLikes,
       infos, setInfos, 
       mode, setMode

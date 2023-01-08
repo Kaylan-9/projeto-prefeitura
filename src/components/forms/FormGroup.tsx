@@ -1,27 +1,28 @@
-import { useContext, useRef, useEffect } from 'react';
+import { useContext, useRef, useEffect, useCallback } from 'react';
 import Input, { InputColor } from '../input/Input';
 import { EditContext } from '../../contexts/EditContext';
-import { ContentContext } from '../../contexts/ContentContext';
+import { ContentContext, ContentContextType } from '../../contexts/ContentContext';
 import request from '../../utils/request';
 import FormStyle from './FormStyle';
 
 const FormGroup = () => {
   const {edit, dispatch} : any = useContext(EditContext);
-  // const {} = useContext(ContentContext);
+  const {setResetContent, handleContents}: ContentContextType = useContext(ContentContext);
   const groupname = useRef<HTMLInputElement>(null!);
   const groupdescricao = useRef<HTMLInputElement>(null!);
   const groupcolor = useRef<HTMLInputElement>(null!);
-  const handleForm = async (e: any) => {
+  const handleForm = useCallback(async (e: any) => {
     e.preventDefault();
     const mode = edit.mod==="u" ? "update" : "create";
     const method = edit.mod==="u" ? "PUT" : "POST";
 
-    let body: {
+    type bodyType = {
       _id?: string,
       name?: string,
       descricao?: string,
       color?: string
-    } = {};
+    };
+    let body: bodyType = {};
 
     if(edit.mod==="u") {
       const {_id, name, descricao, color} = edit.item[0];
@@ -37,9 +38,10 @@ const FormGroup = () => {
     } 
 
     await request("groups/"+mode, method, body);
-    
+    setResetContent((oldResetContent: boolean) => !oldResetContent);
+    handleContents({type: "modifyItems"});
     dispatch({type: "reset"});
-  };
+  }, [setResetContent]);
   
   useEffect(() => {
     if(edit.mod==="u") {

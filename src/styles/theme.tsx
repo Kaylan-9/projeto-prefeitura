@@ -23,7 +23,7 @@ const theme: {
       primary: '#a9acb5',
       secondary: '#ffffff',
       tertiary: 'black',
-      quaternary: 'rgb(34 34 43)'
+      quaternary: 'rgb(64 64 64)'
     }
   }
 };

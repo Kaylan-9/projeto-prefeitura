@@ -7,7 +7,7 @@ import { TiEdit } from "react-icons/ti";
 import { HiTrash } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import { AsideNavContext } from "../../contexts/AsideNavContext";
-import { ContentContext } from "../../contexts/ContentContext";
+import { ContentContext, ContentContextType } from "../../contexts/ContentContext";
 import { EditContext } from "../../contexts/EditContext";
 import colors from "../../styles/colors";
 import { ThemeProps } from "../../styles/theme";
@@ -38,10 +38,9 @@ const SubItemStyle = styled.div<{select: boolean, theme?: ThemeProps}>`
     padding: 10px 25px;
     cursor: pointer;
     ${({select, theme}) => select ? `
-      background-color: #00ff95;
+      background-color: ${theme?.colors?.primary};
       border-radius: 35px;
       cursor: default !important;
-      * {color: white;}
     ` : 
     ''}
   }
@@ -63,10 +62,9 @@ const ItemStyle = styled.div<{toggle: boolean, theme?: ThemeProps}>`
     padding: 15px 25px;
     cursor: pointer;
     ${({toggle, theme}) => toggle ? `
-      background-color: #00ff95;
+      background-color: ${theme?.colors?.primary};
       border-radius: 35px;
       cursor: default !important;
-      * {color: #000000;}
       font-weight: bold;
     ` : 
     ''}
@@ -92,9 +90,8 @@ export const Item: FunctionComponent<ItemModel> = ({value, color, Icon, Content,
 
 const AsideContentAdmin: FunctionComponent<{}> = () => {
   const {edit, dispatch, setSelect} = useContext(EditContext);
-  const {setPages, setInfos}: any = useContext(ContentContext);
+  const {mode, setResetContent, handleContents, setInfos}: ContentContextType = useContext(ContentContext);
   const [select, setSelectSubItem] = useState<string>("remover");
-
 
   const SubItem: FunctionComponent<ItemModel> = useCallback(({value, color, Icon, to, funcClick}) => {
     const handleSubItem = () => {
@@ -146,7 +143,8 @@ const AsideContentAdmin: FunctionComponent<{}> = () => {
           if(edit.flag==="a") { 
             setInfos(await request('articles/store', 'GET'));
           } else { 
-            setPages(await request('groups/pages/all', 'GET'));
+            setResetContent((setResetContent: boolean) => !setResetContent);
+            handleContents({type: "modifyItems"});
           }
           dispatch({type: "reset"});
         }} className={css`
