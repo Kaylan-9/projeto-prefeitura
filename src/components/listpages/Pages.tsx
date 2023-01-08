@@ -69,6 +69,10 @@ export const Page = ({data, index, ip, color, className}: PageType & {className?
     setIsOnline(state);
   }, [setIsOnline]);
 
+  useEffect(() => {
+    websiteisonline();
+  }, []);
+
   return (<PageStyle className={className}
     key={_id} 
     color={color}
@@ -77,7 +81,7 @@ export const Page = ({data, index, ip, color, className}: PageType & {className?
   >
     <a href={link} target="blank">{name}</a>
     {((!likes.includes(_id) || mode==="bookmarks" || mode==="edit") ?
-      (<div className="image" onMouseEnter={websiteisonline}>
+      (<div className="image">
         <a href={link} target="blank"></a>
         <div className="tools">
           {(mode==="edit" ? 

@@ -7,7 +7,7 @@ import FormStyle from './FormStyle';
 
 
 type PageDataType = {
-  _idgroup?: string,
+  _id?: string,
   name?: string,
   link?: string
 };
@@ -31,14 +31,14 @@ const FormPage = () => {
     const mode = edit.mod==="u" ? "update" : "create";
     const method = edit.mod==="u" ? "PUT" : "POST";
 
-    body._idgroup = edit.item[0];
-    console.log(edit.item)
+    body._id = edit.item[0]._id;
     if(name!==pagename.current.value && pagename.current.value!=="") body.name= pagename.current.value;
     if(link!==pagelink.current.value && pagename.current.value!=="") body.link= pagelink.current.value;
 
     await request("pages/"+mode, method, body);
-    setResetContent((oldResetContent: boolean) => !oldResetContent);
+    console.log(body);
     handleContents({type: "modifyItems"});
+    setResetContent((oldResetContent: boolean) => !oldResetContent);
     dispatch({type: "reset"});
   }, [setResetContent]);
 
@@ -46,7 +46,7 @@ const FormPage = () => {
     if(edit.mod==="u") {
       const {name, link} = edit.item[0];
       pagename.current.value = name;
-      pagelink.current.value = link.href;
+      pagelink.current.value = link;
     }
   }, [edit]);
 
