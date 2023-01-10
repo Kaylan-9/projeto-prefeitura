@@ -44,7 +44,7 @@ const Form = ({css}: any) => {
     if(typeof username.current.value==="string" && typeof userpass.current.value==="string") {
       const auth =  {
         name: username.current.value,
-        password: userpass.current.value 
+        password: userpass.current.value
       };
       setUserMode(auth);
     }
