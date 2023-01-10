@@ -6,7 +6,7 @@ export const ToolsLogin = styled.div`
   background-color: ${colors.blue};
 `;
 
-const FormLoginStyle = styled.form`
+const FormLoginStyle = styled.div`
   ${({css} : {css: string}) => css}
   margin: auto;
   background-color: ${({theme}: {theme?: ThemeProps}) => theme?.colors?.secondary};

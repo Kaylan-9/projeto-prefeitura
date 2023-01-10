@@ -1,4 +1,4 @@
-import { useContext, useRef, useEffect } from 'react';
+import { useContext, useRef, useEffect, KeyboardEvent, FormEvent, useCallback } from 'react';
 import Input from '../input/Input';
 import { AuthContext, AuthType } from '../../contexts/AuthContext';
 import { BiUser, BiWindowClose } from "react-icons/bi";
@@ -20,6 +20,7 @@ const Form = ({css}: any) => {
   const {user, setUserMode} : AuthType = useContext(AuthContext);
   const username = useRef<HTMLInputElement>(null!);
   const userpass = useRef<HTMLInputElement>(null!);
+  const buttonadm = useRef<HTMLButtonElement>(null!);
   const {setModal, setIsModalVisible, isModalVisible, setFormModal} = useContext(ModalContext);
 
   useEffect(() => {
@@ -27,10 +28,18 @@ const Form = ({css}: any) => {
       msg: user?.msg ?? "",
       color: colors.red
     });
+    username.current.addEventListener("keyup", (event) => {
+      event.preventDefault();
+      if(event.key==="Enter") userpass.current.focus();
+    });
+    userpass.current.addEventListener("keyup", (event) => {
+      event.preventDefault();
+      if(event.key==="Enter") admlogin();
+    });
   }, [setIsModalVisible, setModal, user]);
 
 
-  function admlogin(): void {
+  const admlogin = useCallback(() => {
     if (!isModalVisible) setIsModalVisible(true);
     if(typeof username.current.value==="string" && typeof userpass.current.value==="string") {
       const auth =  {
@@ -39,7 +48,7 @@ const Form = ({css}: any) => {
       };
       setUserMode(auth);
     }
-  }
+  }, [setUserMode, setIsModalVisible]);
 
   return <FormLoginStyle css={css}>
     <div className='toolswindow'>
