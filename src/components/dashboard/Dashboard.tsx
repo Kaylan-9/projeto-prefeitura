@@ -3,23 +3,31 @@ import { useTheme } from '@emotion/react';
 import { ThemeProps } from '../../styles/theme';
 import DashboardsPages from './DashBoardsPages';
 import styled from '@emotion/styled';
-import mqs from '../../styles/medias';
+import mqs, { sizes } from '../../styles/medias';
 import DashBoardCardUsers from './DashBoardCardUsers';
 import DashBoardsInfos from './DashBoardsInfos';
 
 const DashboardStyle = styled.div`
   display: grid;
   grid-template-columns: 375px auto auto;
-  grid-template-rows: min-content auto;
   grid-template-areas: 
-    'doughnut-pages bar-pages bar-infos'
-    'doughnut-infos data-users data-users';
+    'doughnut-pages bar-pages'
+    'doughnut-infos bar-infos' 
+    'data-users data-users';
   box-sizing: border-box;
-  max-width: 100%;
+  width: ${sizes[3]}px;
+  max-width: ${sizes[3]}px !important;
+  margin-left: calc(50% - (355px) - (${sizes[3]}px / 2));
   gap: 25px;
-  ${mqs[4]} {
+  ${mqs[5]} {
+    margin-left: 0;
     grid-template-columns: auto;
-    grid-template-areas: 'doughnut-pages' 'bar-pages' 'data-users';
+    grid-template-areas: 'doughnut-pages' 'bar-pages' 'bar-infos' 'doughnut-infos' 'data-users' !important;
+    max-width: calc(100% - 375px) !important;
+  }
+  ${mqs[3]} {
+    margin-left: 0;
+    max-width: 100% !important;
   }
   section { 
     overflow: hidden;

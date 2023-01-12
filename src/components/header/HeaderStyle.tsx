@@ -27,12 +27,10 @@ export const HeaderStyle = styled.header<{theme?: ThemeProps}>`
     gap: 10px;
     ${mqs[2]} {
       gap: 0px;
-      justify-content: space-between;
+      justify-content: flex-start;
+      gap: 15px;
       width: 100%;
     }
-  }
-  ${mqs[2]} {
-    padding: 15px;
   }
 `;
 

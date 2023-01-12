@@ -28,7 +28,7 @@ interface ItemModel {
 const SubItemStyle = styled.div<{select: boolean, theme?: ThemeProps}>`
   display: flex;
   flex-direction: column;
-  padding: 5px 20px;
+  margin-left: 50px;
   button {
     font-size: 15px !important;
     font-weight: bold !important;
@@ -49,7 +49,6 @@ const SubItemStyle = styled.div<{select: boolean, theme?: ThemeProps}>`
 const ItemStyle = styled.div<{toggle: boolean, theme?: ThemeProps}>`
   display: flex;
   flex-direction: column;
-  padding: 25px 35px;
   padding-bottom: 0 !important;
   font-size: 15px;
   font-weight: bold;
@@ -121,6 +120,7 @@ const AsideContentAdmin: FunctionComponent<{}> = () => {
       justify-content: center;
       ${mqs[3]} {
         flex-direction: row;
+        padding: 0 25px;
       }
     `}>
       <Item value="grupos" Icon={BiGrid} funcClick={() => dispatch({type: "flag", flag: "g"})} Content={Content}/>
@@ -128,9 +128,7 @@ const AsideContentAdmin: FunctionComponent<{}> = () => {
       <Item value="estátisticas" Icon={VscGraph} />
       <Item value="gerenciar informes" Icon={TiEdit} Content={Content} funcClick={() => [dispatch({type: "flag", flag: "a"}), setSelect({})]}/>
     </nav>
-    <nav className={css`
-      padding: 25px;
-    `}>
+    <nav>
       {edit.mod==="d" ? 
         <button onClick={async () => {
           const typeitems: {[key: string]: string} = { 
@@ -152,6 +150,7 @@ const AsideContentAdmin: FunctionComponent<{}> = () => {
           font-size: 20px;
           border-radius: 100%;
           width: 100%;
+          padding: 0 25px;
           button {
             display: flex;
             flex-direction: row;

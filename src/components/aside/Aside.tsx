@@ -3,7 +3,7 @@ import { FunctionComponent, ReactNode } from 'react';
 import mqs from '../../styles/medias';
 import { useTheme } from '@emotion/react';
 import { ThemeProps } from '../../styles/theme';
-
+import AsideStyle from './AsideStyle';
 
 export const Aside: FunctionComponent<{children: ReactNode}> = ({children}) => {
   const theme: ThemeProps = useTheme();
@@ -27,14 +27,6 @@ export const Aside: FunctionComponent<{children: ReactNode}> = ({children}) => {
       margin-right: 0px;
       padding: 25px 0;
     }
-    aside {
-      display: flex;
-      flex-direction: column;
-      gap: 19px;
-      ${mqs[3]} {
-        flex-direction: row;
-      }
-    }
     h2 {
       font-size: 22px;
       font-weight: lighter;
@@ -50,10 +42,8 @@ export const Aside: FunctionComponent<{children: ReactNode}> = ({children}) => {
     }
   `}>
     <h2>Navegação</h2>
-    <aside>{children}</aside>
+    <AsideStyle>{children}</AsideStyle>
   </div>;
 }
-
-
 
 export default Aside;
